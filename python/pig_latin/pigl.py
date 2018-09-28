@@ -1,8 +1,11 @@
 def instruction():
+    import time
+    time.sleep(1)
     print "".join(["\nPig latin game:\n",
         "Give me a sentence, and I will give you its encrypted\n",
         "pig-latin form.\n",
-        "What is your sentence?"])
+        "What is your sentence?\n",
+        '(To quit this game, simply press the "Enter" key)'])
 
 def checkDictionary(word, lang = "en-US"):
     # To install enchant on raspberry pi:
@@ -28,6 +31,7 @@ def piglWord(word):
     if not word[-1].isalpha():
         punc = word[-1]
         word = word[:-1]
+
     checkDictionary(word)
 
     isCapital = word[0].isupper()
@@ -80,10 +84,14 @@ def pigLatinGame(shouldEchoInput = True):
             sentence = getpass.getpass('')
         if sentence == "":
             break
-        print(piglSentence(sentence))
+        try:
+            print(piglSentence(sentence))
+        except ValueError as e:
+            print(e)
+
 
 def main():
-    pigLatinGame(False)
+    pigLatinGame(shouldEchoInput = True)
 
 if __name__ == "__main__":
     main()
